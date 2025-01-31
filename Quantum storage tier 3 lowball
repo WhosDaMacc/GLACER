@@ -1,0 +1,28 @@
+// contracts/StorageLedger.sol
+// SPDX-License-Identifier: AGPL-3.0
+pragma solidity ^0.8.20;
+
+contract StorageLedger {
+    struct Shard {
+        address owner;
+        bytes32 quantumHash;
+        uint256 timestamp;
+    }
+    
+    mapping(bytes32 => Shard) public shards;
+    uint256 public storageFee = 0.001 ether;
+
+    event ShardStored(bytes32 indexed cidHash, address owner);
+
+    function registerShard(bytes32 cidHash, bytes32 quantumHash) external payable {
+        require(msg.value >= storageFee, "Insufficient fee");
+        
+        shards[cidHash] = Shard({
+            owner: msg.sender,
+            quantumHash: quantumHash,
+            timestamp: block.timestamp
+        });
+        
+        emit ShardStored(cidHash, msg.sender);
+    }
+}
