@@ -1,0 +1,16 @@
+[User]
+                         │
+                         ├─Encrypt (Kyber-1024)
+                         │
+                         ▼
+                [Hot Storage - Redis Cluster]
+                         │
+                         ├─Shard & Replicate
+                         │
+                         ▼
+              [Warm Storage - IPFS + Filecoin]
+                         │
+                         ├─Archive
+                         │
+                         ▼
+        [Cold Storage - Glacier Protocol (Post-Quantum)]
