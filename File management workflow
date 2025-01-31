@@ -1,0 +1,8 @@
+sequenceDiagram
+    User->>Frontend: Upload File
+    Frontend->>QuantumEncrypt: Encrypt File
+    QuantumEncrypt->>HotStorage: Cache Encrypted
+    HotStorage->>WarmStorage: Replicate to IPFS
+    WarmStorage->>ColdStorage: Archive to Filecoin
+    ColdStorage-->>User: Return CID
+    User->>Blockchain: Register Shard Metadata
