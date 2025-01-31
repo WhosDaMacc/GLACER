@@ -1,0 +1,22 @@
+// contracts/ProfitPool.sol
+// SPDX-License-Identifier: AGPL-3.0
+pragma solidity ^0.8.20;
+
+contract ProfitPool {
+    address[] public shareholders;
+    mapping(address => uint256) public shares;
+    uint256 public totalShares;
+
+    function addShareholder(address _account, uint256 _shares) external {
+        shareholders.push(_account);
+        shares[_account] = _shares;
+        totalShares += _shares;
+    }
+
+    function distribute() external payable {
+        uint256 shareValue = msg.value / totalShares;
+        for(uint256 i = 0; i < shareholders.length; i++) {
+            payable(shareholders[i]).transfer(shareValue * shares[shareholders[i]]);
+        }
+    }
+}
