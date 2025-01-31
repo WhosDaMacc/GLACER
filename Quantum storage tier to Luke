@@ -1,0 +1,17 @@
+// services/storage/warm-storage.ts
+import { Web3Storage } from 'web3.storage';
+
+const client = new Web3Storage({ token: process.env.WEB3_STORAGE_TOKEN! });
+
+export async function storeToIPFS(data: Buffer) {
+  const files = [new File([data], 'encrypted.bin')];
+  const cid = await client.put(files, {
+    wrapWithDirectory: false,
+    maxRetries: 3
+  });
+  
+  // Store shard metadata on-chain
+  await contracts.StorageLedger.registerShard(cid);
+  
+  return cid;
+}
