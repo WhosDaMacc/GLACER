@@ -1,7 +1,3 @@
-# Install
-npm install -g @glacer/storage-cli
-
-# Usage
-glacer-storage upload ./photo.jpg --tier hot
-glacer-storage retrieve QmXYZ --key-file ~/.glacer/keys.json
-glacer-storage migrate QmXYZ --from hot --to cold
+forge install OpenZeppelin/openzeppelin-contracts
+forge build
+forge create StorageLedger --rpc-url $RPC_URL --private-key $PK
