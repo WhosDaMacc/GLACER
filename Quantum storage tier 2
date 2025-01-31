@@ -9,4 +9,4 @@ export async function cacheEncrypted(
   ttl: number = 300
 ) {
   await redis.setex(`hot:${cid}`, ttl, data);
-}
+} 
