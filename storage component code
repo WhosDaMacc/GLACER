@@ -1,0 +1,25 @@
+// services/storage/quantum-encrypt.ts
+import { Kyber } from 'pqc-kyber';
+
+export class QuantumStorage {
+  private readonly keyPair: { publicKey: Uint8Array, privateKey: Uint8Array };
+
+  constructor() {
+    this.keyPair = Kyber.keyPair();
+  }
+
+  async encryptFile(file: Buffer) {
+    const { ciphertext, sharedSecret } = Kyber.encrypt(this.keyPair.publicKey, file);
+    return {
+      ciphertext,
+      metadata: {
+        keyHash: await this.hashKey(sharedSecret),
+        encryptionTime: new Date().toISOString()
+      }
+    };
+  }
+
+  private async hashKey(key: Uint8Array) {
+    return crypto.subtle.digest('SHA3-512', key);
+  }
+}
