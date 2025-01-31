@@ -1,0 +1,12 @@
+// services/storage/hot-storage.ts
+import Redis from 'ioredis';
+
+const redis = new Redis(process.env.REDIS_URL!);
+
+export async function cacheEncrypted(
+  cid: string,
+  data: Buffer,
+  ttl: number = 300
+) {
+  await redis.setex(`hot:${cid}`, ttl, data);
+}
