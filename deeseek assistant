@@ -1,0 +1,16 @@
+deepseek-assistant/
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml       # CI/CD Pipeline
+├── src/
+│   ├── deepseek/
+│   │   ├── __init__.py
+│   │   ├── assistant.py   # Core logic
+│   │   └── api.py         # Web interface
+│   └── tests/             # Unit tests
+├── examples/
+│   └── basic_usage.ipynb  # Jupyter notebook demo
+├── requirements.txt
+├── Dockerfile
+├── LICENSE
+└── README.md
