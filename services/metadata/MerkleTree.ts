@@ -21,3 +21,11 @@ export class MetadataMerkleTree {
     return this.tree.verify(proof, keccak256(metadata), this.getRoot());
   }
 }
+import { MetadataContract } from '../blockchain/MetadataContract';
+
+export class MetadataService {
+  async updateAccess(cid: string, addresses: string[]) {
+    const proof = this.merkleTree.getProof(addresses);
+    await MetadataContract.setAccessList(cid, proof);
+  }
+}
