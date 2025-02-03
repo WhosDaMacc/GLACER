@@ -1,0 +1,37 @@
+// services/storage/StorageOrchestrator.ts
+import { MetadataRegistry, QuantumEncryptor, StorageLedger } from '../blockchain';
+import { Redis, IPFS, Filecoin } from '../storage';
+
+export class StorageOrchestrator {
+  async storeFile(file: Buffer, owner: string) {
+    // Step 1: Quantum Encryption
+    const { encryptedData, quantumHash } = await QuantumEncryptor.encrypt(file);
+    
+    // Step 2: Store in Hot Storage
+    const cid = await Redis.store(encryptedData);
+    
+    // Step 3: Register Metadata
+    await MetadataRegistry.register({
+      cid,
+      quantumHash,
+      owner,
+      tier: 'HOT'
+    });
+
+    // Step 4: Async Replication
+    this.replicateToWarmStorage(cid, encryptedData);
+    
+    return cid;
+  }
+
+  private async replicateToWarmStorage(cid: string, data: Buffer) {
+    try {
+      const ipfsCID = await IPFS.store(data);
+      await MetadataRegistry.updateTier(cid, 'WARM');
+      await Filecoin.archive(ipfsCID);
+      await MetadataRegistry.updateTier(cid, 'COLD');
+    } catch (error) {
+      await MetadataRegistry.flagError(cid, error);
+    }
+  }
+}
