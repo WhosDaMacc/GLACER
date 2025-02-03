@@ -26,3 +26,13 @@ terraform {
     } 
   } 
 }
+terraform { 
+  cloud { 
+    
+    organization = "GLACERWORLD" 
+
+    workspaces { 
+      name = "GlacerIceberg" 
+    } 
+  } 
+}
