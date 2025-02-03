@@ -16,3 +16,13 @@ resource "null_resource" "example" {
     value = "An example resource that does nothing!"
   }
 }
+terraform { 
+  cloud { 
+    
+    organization = "GLACERWORLD" 
+
+    workspaces { 
+      name = "GlacerIceberg" 
+    } 
+  } 
+}
