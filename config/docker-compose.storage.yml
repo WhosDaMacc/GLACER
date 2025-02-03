@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  storage-orchestrator:
+    image: glacier/storage-orchestrator
+    environment:
+      - BLOCKCHAIN_RPC=${BLOCKCHAIN_RPC}
+      - IPFS_API=/ip4/ipfs/tcp/5001
+      - REDIS_URL=redis://redis:6379
+
+  metadata-sync:
+    image: glacier/metadata-sync
+    depends_on:
+      - storage-orchestrator
+      - blockchain-node
+
+  redis:
+    image: redis:alpine
+
+  ipfs:
+    image: ipfs/go-ipfs
