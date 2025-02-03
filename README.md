@@ -6,7 +6,7 @@
 ## Getting Started
 
 ```bash
-git clone https://github.com/<your-username>/GLACER.git
+git clone https://github.com/<Whosdamacc>/GLACER.git
 cd GLACER
 npm install
 forge install
