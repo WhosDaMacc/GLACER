@@ -1,0 +1,8 @@
+type File @entity {
+  id: ID!             # CID
+  owner: Bytes!       # Ethereum address
+  quantumHash: String!
+  tier: String!       # HOT/WARM/COLD
+  timestamp: BigInt!
+  accessList: [Bytes!]!
+}
