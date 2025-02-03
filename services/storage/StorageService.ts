@@ -14,3 +14,15 @@ export class StorageService {
     return file;
   }
 }
+import { MetadataContract } from '../blockchain/MetadataContract';
+
+export class StorageService {
+  async migrateTier(cid: string, newTier: StorageTier) {
+    await this.moveToTier(cid, newTier);
+    await MetadataContract.updateTier(cid, newTier);
+  }
+
+  private async moveToTier(cid: string, newTier: StorageTier) {
+    // Logic to move file to new tier
+  }
+}
