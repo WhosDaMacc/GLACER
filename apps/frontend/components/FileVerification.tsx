@@ -1,10 +1,11 @@
 import React from 'react';
-import { useFileVerification } from '../hooks/useVerification';
+import { useFileVerification } from '../hooks/useFileVerification';
 
 export default function FileVerification({ cid }: { cid: string }) {
   const verificationResult = useFileVerification(cid);
 
   if (!verificationResult) return <div>Loading...</div>;
+  if (verificationResult.error) return <div>Error: {verificationResult.error}</div>;
 
   return (
     <div>
