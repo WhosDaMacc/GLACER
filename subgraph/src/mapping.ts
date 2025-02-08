@@ -1,5 +1,5 @@
-import { FileRegistered } from '../generated/MetadataRegistry/MetadataRegistry'
-import { File } from '../generated/schema'
+import { FileRegistered } from '../generated/MetadataRegistry/MetadataRegistry';
+import { File } from '../generated/schema';
 
 export function handleFileRegistered(event: FileRegistered): void {
   let file = new File(event.params.cid.toHexString());
